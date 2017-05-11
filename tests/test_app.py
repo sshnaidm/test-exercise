@@ -8,6 +8,10 @@ from flask_testing import TestCase
 
 @ddt
 class Test(TestCase):
+    """
+    Test object for testing application, inherited from `TestCase` of
+    flask-testing module
+    """
     def create_app(self):
         app = create_app("config.py")
         app.config['TESTING'] = True

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>controllers.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>controllers.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">abort</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">jsonify</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
+
+<span class="kn">from</span> <span class="nn">testex.utils</span> <span class="kn">import</span> <span class="n">get_diff</span>
+<span class="kn">from</span> <span class="nn">testex.utils</span> <span class="kn">import</span> <span class="n">set_data</span>
+<span class="kn">from</span> <span class="nn">testex.utils</span> <span class="kn">import</span> <span class="n">validate</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Register flask blueprints for API</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="n">api</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s1">&#39;diff&#39;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>Reply template for API
+:param passed: whether request passed or not
+:param errors: which errors happened if were
+:param data_id: index of Data object
+:param side: "left" or "right" parameter
+:return: json response</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">reply</span><span class="p">(</span><span class="n">passed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="n">errors</span><span class="p">,</span>
+         <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">passed</span><span class="p">,</span>
+         <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;set&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;side&quot;</span><span class="p">:</span> <span class="n">side</span><span class="p">,</span>
+         <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">data_id</span><span class="p">})</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Index page
+:return: template of index.html</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nd">@api.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s2">&quot;index.html&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>POST request endpoint, receiving "left" parameter
+:param data_id: index of Data object
+:return: JSON reply template or 400 HTTP error in case of wrong request</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nd">@api.route</span><span class="p">(</span><span class="s1">&#39;/v1/diff/&lt;int:data_id&gt;/left&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="n">data_id</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">data</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">set_data</span><span class="p">(</span><span class="n">data_id</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">reply</span><span class="p">(</span><span class="n">passed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_id</span><span class="o">=</span><span class="n">data_id</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">reply</span><span class="p">(</span><span class="n">passed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_id</span><span class="o">=</span><span class="n">data_id</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>POST request endpoint, receiving "right" parameter
+:param data_id: index of Data object
+:return: JSON reply template or 400 HTTP error in case of wrong request</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nd">@api.route</span><span class="p">(</span><span class="s1">&#39;/v1/diff/&lt;int:data_id&gt;/right&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="n">data_id</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">data</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">set_data</span><span class="p">(</span><span class="n">data_id</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">reply</span><span class="p">(</span><span class="n">passed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_id</span><span class="o">=</span><span class="n">data_id</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">reply</span><span class="p">(</span><span class="n">passed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_id</span><span class="o">=</span><span class="n">data_id</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>GET request, receiving Data index
+:param data_id: index of Data object
+:return: difference between right and left sieds, either 400 HTTP error in
+        case of error.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nd">@api.route</span><span class="p">(</span><span class="s1">&#39;/v1/diff/&lt;int:data_id&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">calc_diff</span><span class="p">(</span><span class="n">data_id</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">diff</span> <span class="o">=</span> <span class="n">get_diff</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">diff</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
