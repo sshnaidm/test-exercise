@@ -1,0 +1,36 @@
+Endpoint which receives left side data as base64 encoded binary
+---
+parameters:
+  - in: "body"
+    name: "data"
+    description: "'Left' base64 encoded binary data"
+    required: true
+    schema:
+      $ref: "#/definitions/Left"
+  - name: data_id
+    in: path
+    type: "integer"
+    format: "int64"
+    required: true
+responses:
+  400:
+    description: "Invalid input"
+  200:
+    description: "Input was received"
+
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+responses:
+  200:
+    description: Dictionary with report about action success etc
+definitions:
+  Left:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      data:
+        type: "string"
+        example: "Ynl0ZXM="

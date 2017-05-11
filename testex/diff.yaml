@@ -1,0 +1,18 @@
+Endpoint which returns difference between two sides
+---
+parameters:
+  - name: data_id
+    in: path
+    type: "integer"
+    format: "int64"
+    required: true
+responses:
+  400:
+    description: "Invalid input or no difference is ready"
+  200:
+    description: "Difference is returned"
+produces:
+  - "application/json"
+responses:
+  200:
+    description: Dictionary with difference output

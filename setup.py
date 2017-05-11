@@ -7,7 +7,8 @@ setup(
     install_requires=[
         'flask',
         'flask-sqlalchemy',
-        'pycco'
+        'pycco',
+        'flasgger'
     ],
     setup_requires=[
         'pytest-runner',
